@@ -14,7 +14,7 @@ const range = ref<7 | 14 | 30>(7)
 
 const option = computed(() => {
   const data = store.dailyStats.slice(-range.value)
-  const dates = data.map(d => d.date.slice(5)) // MM-DD
+  const dates = data.map(d => d.date.slice(5))
   const values = data.map(d => d.sessions)
 
   return {
@@ -29,25 +29,26 @@ const option = computed(() => {
     xAxis: {
       type: 'category',
       data: dates,
-      axisLabel: { fontSize: 10, rotate: 0 },
+      axisLabel: { fontSize: 10, color: '#A09A94' },
+      axisLine: { lineStyle: { color: '#E8E3DB' } },
       axisTick: { show: false }
     },
     yAxis: {
       type: 'value',
       minInterval: 1,
-      axisLabel: { fontSize: 10 },
-      splitLine: { lineStyle: { color: '#E2E8F0', type: 'dashed' } }
+      axisLabel: { fontSize: 10, color: '#A09A94' },
+      splitLine: { lineStyle: { color: '#E8E3DB', type: 'dashed' } }
     },
     series: [{
       type: 'bar',
       data: values,
       itemStyle: {
-        color: '#EF4444',
+        color: '#E04040',
         borderRadius: [4, 4, 0, 0]
       },
       barMaxWidth: 24,
       emphasis: {
-        itemStyle: { color: '#DC2626' }
+        itemStyle: { color: '#C83030' }
       }
     }]
   }
@@ -57,7 +58,7 @@ const option = computed(() => {
 <template>
   <div class="daily-chart">
     <div class="chart-header">
-      <span class="chart-title">每日番茄趋势</span>
+      <span class="chart-title">每日趋势</span>
       <div class="range-tabs">
         <button
           v-for="r in ([7, 14, 30] as const)"
@@ -82,8 +83,8 @@ const option = computed(() => {
 .daily-chart {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 14px;
+  border-radius: var(--radius-lg);
+  padding: 16px;
 }
 
 .chart-header {
@@ -101,24 +102,28 @@ const option = computed(() => {
 
 .range-tabs {
   display: flex;
-  gap: 4px;
+  gap: 2px;
+  background: var(--bg-hover);
+  border-radius: var(--radius-sm);
+  padding: 2px;
 }
 
 .range-btn {
-  border: 1px solid var(--border-color);
+  border: none;
   background: transparent;
   color: var(--text-secondary);
   font-size: 11px;
-  padding: 2px 10px;
-  border-radius: 6px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .range-btn.active {
-  background: #EF4444;
-  color: #fff;
-  border-color: #EF4444;
+  background: var(--bg-card);
+  color: var(--color-work);
+  box-shadow: var(--shadow-sm);
 }
 
 .chart-empty {

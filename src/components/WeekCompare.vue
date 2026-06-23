@@ -84,12 +84,12 @@ function changeMark(val: number): { cls: string; sym: string } {
 .week-compare {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 14px;
+  border-radius: var(--radius-lg);
+  padding: 16px;
 }
 
 .chart-header {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .chart-title {
@@ -101,7 +101,7 @@ function changeMark(val: number): { cls: string; sym: string } {
 .compare-content {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .compare-row {
@@ -124,7 +124,7 @@ function changeMark(val: number): { cls: string; sym: string } {
 }
 
 .compare-week.current {
-  color: #EF4444;
+  color: var(--color-work);
 }
 
 .compare-val {
@@ -134,7 +134,7 @@ function changeMark(val: number): { cls: string; sym: string } {
 }
 
 .compare-val.current {
-  color: #EF4444;
+  color: var(--color-work);
 }
 
 .compare-time {
@@ -143,7 +143,7 @@ function changeMark(val: number): { cls: string; sym: string } {
 }
 
 .compare-vs {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
   color: var(--text-tertiary);
   background: var(--bg-hover);
@@ -159,11 +159,11 @@ function changeMark(val: number): { cls: string; sym: string } {
   font-weight: 600;
   padding: 8px;
   background: var(--bg-hover);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 }
 
-.change-up { color: #16A34A; }
-.change-down { color: #EF4444; }
+.change-up { color: #4A9E6E; }
+.change-down { color: #E04040; }
 .change-flat { color: var(--text-tertiary); }
 .delta-sep { color: var(--border-color); }
 

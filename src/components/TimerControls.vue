@@ -33,9 +33,10 @@ function handlePrimary() {
       :disabled="store.isIdle"
       @click="store.reset()"
       class="ctrl-btn secondary-btn"
+      :title="'重置'"
     >
       <template #icon>
-        <n-icon :component="Refresh" />
+        <n-icon :component="Refresh" size="22" />
       </template>
     </n-button>
 
@@ -47,9 +48,10 @@ function handlePrimary() {
       @click="handlePrimary"
       class="ctrl-btn primary-btn"
       :class="{ 'is-running': store.isRunning }"
+      :title="primaryLabel"
     >
       <template #icon>
-        <n-icon :component="primaryIcon" size="28" />
+        <n-icon :component="primaryIcon" size="30" />
       </template>
     </n-button>
 
@@ -59,9 +61,10 @@ function handlePrimary() {
       size="large"
       @click="store.skip()"
       class="ctrl-btn secondary-btn"
+      :title="'跳过'"
     >
       <template #icon>
-        <n-icon :component="PlaySkipForward" />
+        <n-icon :component="PlaySkipForward" size="22" />
       </template>
     </n-button>
   </div>
@@ -72,38 +75,49 @@ function handlePrimary() {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
-  margin-top: 12px;
+  gap: 28px;
+  margin-top: 16px;
 }
 
 .ctrl-btn {
-  transition: all 0.25s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .primary-btn {
-  width: 64px !important;
-  height: 64px !important;
-  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.35);
+  width: 68px !important;
+  height: 68px !important;
+  box-shadow: 0 6px 24px rgba(224, 64, 64, 0.3);
 }
 
 .primary-btn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 6px 24px rgba(239, 68, 68, 0.5);
+  transform: scale(1.06);
+  box-shadow: 0 8px 32px rgba(224, 64, 64, 0.45);
 }
 
+.primary-btn:active {
+  transform: scale(0.96);
+}
+
+/* 运行中 — 琥珀暖色 */
 .primary-btn.is-running {
-  --n-color: #F59E0B !important;
-  --n-color-hover: #D97706 !important;
-  --n-color-pressed: #B45309 !important;
-  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
+  --n-color: #E8A030 !important;
+  --n-color-hover: #D49520 !important;
+  --n-color-pressed: #C08818 !important;
+  --n-color-focus: #E8A030 !important;
+  box-shadow: 0 6px 24px rgba(232, 160, 48, 0.35);
 }
 
 .primary-btn.is-running:hover {
-  box-shadow: 0 6px 24px rgba(245, 158, 11, 0.5);
+  box-shadow: 0 8px 32px rgba(232, 160, 48, 0.5);
 }
 
 .secondary-btn {
-  width: 48px !important;
-  height: 48px !important;
+  width: 52px !important;
+  height: 52px !important;
+  opacity: 0.75;
+}
+
+.secondary-btn:hover {
+  opacity: 1;
 }
 </style>

@@ -39,16 +39,22 @@ function handleTodayIncrement() {
 
 <template>
   <div class="settings-trigger">
-    <n-button
-      circle
-      size="small"
-      quaternary
-      @click="handleOpen"
-    >
-      <template #icon>
-        <n-icon :component="SettingsOutline" />
+    <n-tooltip placement="left">
+      <template #trigger>
+        <n-button
+          circle
+          size="small"
+          quaternary
+          @click="handleOpen"
+          class="settings-btn"
+        >
+          <template #icon>
+            <n-icon :component="SettingsOutline" size="20" />
+          </template>
+        </n-button>
       </template>
-    </n-button>
+      设置
+    </n-tooltip>
 
     <n-drawer
       v-model:show="showDrawer"
@@ -103,7 +109,6 @@ function handleTodayIncrement() {
 
           <n-divider />
 
-          <!-- 今日番茄数调整 -->
           <div class="today-adjust">
             <span class="setting-label">今日番茄数</span>
             <div class="today-controls">
@@ -144,9 +149,20 @@ function handleTodayIncrement() {
 <style scoped>
 .settings-trigger {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 8px;
+  right: 8px;
   z-index: 10;
+}
+
+.settings-btn {
+  width: 36px !important;
+  height: 36px !important;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.settings-btn:hover {
+  opacity: 1;
 }
 
 .setting-label {

@@ -15,13 +15,11 @@ const option = computed(() => {
   const now = new Date()
   const year = now.getFullYear()
 
-  // 生成最近3个月的数据
   const data: [string, number][] = []
   const endDate = now
   const startDate = new Date()
   startDate.setMonth(startDate.getMonth() - 3)
 
-  // 聚合已有数据
   const dayMap = new Map<string, number>()
   for (const d of store.dailyStats) {
     if (d.sessions > 0) {
@@ -29,7 +27,6 @@ const option = computed(() => {
     }
   }
 
-  // 填充日历数据
   const d = new Date(startDate)
   while (d <= endDate) {
     const key = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
@@ -52,13 +49,13 @@ const option = computed(() => {
       left: 'center',
       bottom: 0,
       pieces: [
-        { min: 0, max: 0, color: '#F1F5F9', label: '无' },
-        { min: 1, max: 1, color: '#FEE2E2', label: '1' },
-        { min: 2, max: 3, color: '#FCA5A5', label: '2-3' },
-        { min: 4, max: 6, color: '#EF4444', label: '4-6' },
-        { min: 7, max: 99, color: '#B91C1C', label: '7+' }
+        { min: 0, max: 0, color: '#F3F0EB', label: '无' },
+        { min: 1, max: 1, color: '#FBE8E8', label: '1' },
+        { min: 2, max: 3, color: '#F0A8A8', label: '2-3' },
+        { min: 4, max: 6, color: '#E04040', label: '4-6' },
+        { min: 7, max: 99, color: '#B02020', label: '7+' }
       ],
-      textStyle: { fontSize: 10 }
+      textStyle: { fontSize: 10, color: '#A09A94' }
     },
     calendar: {
       top: 20,
@@ -67,13 +64,14 @@ const option = computed(() => {
       bottom: 80,
       cellSize: [16, 16],
       range: [startDate.getTime(), endDate.getTime()],
-      yearLabel: { show: true, fontSize: 12 },
+      yearLabel: { show: true, fontSize: 12, color: '#6B6560' },
       dayLabel: {
         fontSize: 10,
-        nameMap: ['日', '一', '二', '三', '四', '五', '六']
+        nameMap: ['日', '一', '二', '三', '四', '五', '六'],
+        color: '#A09A94'
       },
-      monthLabel: { fontSize: 11 },
-      splitLine: { lineStyle: { color: '#E2E8F0' } },
+      monthLabel: { fontSize: 11, color: '#6B6560' },
+      splitLine: { lineStyle: { color: '#E8E3DB' } },
       itemStyle: {
         borderRadius: 3
       }
@@ -90,7 +88,7 @@ const option = computed(() => {
 <template>
   <div class="calendar-heatmap">
     <div class="chart-header">
-      <span class="chart-title">番茄热力图</span>
+      <span class="chart-title">热力图</span>
     </div>
     <VChart
       v-if="store.dailyStats.some(d => d.sessions > 0)"
@@ -99,7 +97,7 @@ const option = computed(() => {
       style="height: 200px"
     />
     <div v-else class="chart-empty">
-      <span>使用越久，热力图越丰富 🍅</span>
+      <span>开始专注，点亮热力图</span>
     </div>
   </div>
 </template>
@@ -108,8 +106,8 @@ const option = computed(() => {
 .calendar-heatmap {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 14px;
+  border-radius: var(--radius-lg);
+  padding: 16px;
 }
 
 .chart-header {

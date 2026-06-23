@@ -1,44 +1,64 @@
 /* ========= 全局样式 & CSS 变量 ========= */
 
 :root {
-  /* 亮色主题 */
-  --bg-primary: #F8FAFC;
+  /* 精准温暖色板 — 亮色主题 */
+  --bg-primary: #FAF8F5;
   --bg-card: #FFFFFF;
-  --bg-hover: #F1F5F9;
-  --text-primary: #1E293B;
-  --text-secondary: #64748B;
-  --text-tertiary: #94A3B8;
-  --border-color: #E2E8F0;
+  --bg-hover: #F3F0EB;
+  --text-primary: #1C1B19;
+  --text-secondary: #6B6560;
+  --text-tertiary: #A09A94;
+  --border-color: #E8E3DB;
 
-  /* 品牌色 */
-  --color-work: #EF4444;
-  --color-work-dim: #FEF2F2;
-  --color-short-break: #22C55E;
-  --color-short-break-dim: #F0FDF4;
-  --color-long-break: #3B82F6;
-  --color-long-break-dim: #EFF6FF;
+  /* 品牌色 — 模式 */
+  --color-work: #E04040;
+  --color-work-dim: #FDF5F5;
+  --color-work-soft: #FBE8E8;
+  --color-short-break: #4A9E6E;
+  --color-short-break-dim: #F2F9F5;
+  --color-short-break-soft: #E3F2E9;
+  --color-long-break: #5B7BC0;
+  --color-long-break-dim: #F3F6FC;
+  --color-long-break-soft: #E5EBF8;
 
+  /* 排版 */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
-    'Microsoft YaHei', sans-serif;
+    'Microsoft YaHei', system-ui, sans-serif;
   font-size: 14px;
   color: var(--text-primary);
   background: var(--bg-primary);
+
+  /* 圆角 */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* 阴影 */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
 /* 暗色主题（跟随系统） */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-primary: #0F172A;
-    --bg-card: #1E293B;
-    --bg-hover: #334155;
-    --text-primary: #F1F5F9;
-    --text-secondary: #94A3B8;
-    --text-tertiary: #64748B;
-    --border-color: #334155;
+    --bg-primary: #0D0D0C;
+    --bg-card: #1A1A19;
+    --bg-hover: #262624;
+    --text-primary: #F0EDE8;
+    --text-secondary: #9E9790;
+    --text-tertiary: #5E5954;
+    --border-color: #2E2D2A;
 
-    --color-work-dim: #3B1010;
-    --color-short-break-dim: #0A3020;
-    --color-long-break-dim: #0A1A3A;
+    --color-work: #E05555;
+    --color-work-dim: #1C1010;
+    --color-work-soft: #2A1414;
+    --color-short-break: #4A9E6E;
+    --color-short-break-dim: #0C1A12;
+    --color-short-break-soft: #14261C;
+    --color-long-break: #6B8BD0;
+    --color-long-break-dim: #0C1224;
+    --color-long-break-soft: #141C32;
   }
 }
 
@@ -59,5 +79,5 @@ body {
   background: var(--bg-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
-

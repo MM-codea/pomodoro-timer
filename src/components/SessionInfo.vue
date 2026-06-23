@@ -4,31 +4,31 @@ import { useTimerStore } from '../stores/timerStore'
 
 const store = useTimerStore()
 
-const tomatoIcons = computed(() => {
+const modeColor = computed(() => {
+  switch (store.mode) {
+    case 'work': return '#E04040'
+    case 'shortBreak': return '#4A9E6E'
+    case 'longBreak': return '#5B7BC0'
+  }
+})
+
+const cycleDots = computed(() => {
   const total = store.settings.longBreakInterval
   const current = store.isWork ? store.currentSession - 1 : store.currentSession
-  const icons: string[] = []
+  const dots: { type: 'done' | 'active' | 'pending' }[] = []
 
   for (let i = 1; i <= total; i++) {
     if (i <= store.sessionsCompleted && i <= total) {
-      icons.push('🍅')
+      dots.push({ type: 'done' })
     } else if (i === current && store.isWork) {
-      icons.push('🔴')
+      dots.push({ type: 'active' })
     } else if (i === current && !store.isWork) {
-      icons.push('☕')
+      dots.push({ type: 'active' })
     } else {
-      icons.push('⭕')
+      dots.push({ type: 'pending' })
     }
   }
-  return icons
-})
-
-const modeColor = computed(() => {
-  switch (store.mode) {
-    case 'work': return '#EF4444'
-    case 'shortBreak': return '#22C55E'
-    case 'longBreak': return '#3B82F6'
-  }
+  return dots
 })
 
 // 撤销按钮逻辑
@@ -38,13 +38,12 @@ let undoTimer: ReturnType<typeof setTimeout> | null = null
 watch(
   () => store.sessionsCompleted,
   (newVal, oldVal) => {
-    // 仅在番茄数增加时（新完成了一个番茄）显示撤销
     if (newVal > oldVal) {
       showUndo.value = true
       if (undoTimer) clearTimeout(undoTimer)
       undoTimer = setTimeout(() => {
         showUndo.value = false
-      }, 10000) // 10 秒后自动消失
+      }, 10000)
     }
   }
 )
@@ -62,16 +61,11 @@ onUnmounted(() => {
 
 <template>
   <div class="session-info">
-    <!-- 撤销提示（番茄完成后短暂出现） -->
+    <!-- 撤销提示 -->
     <transition name="undo-fade">
       <div v-if="showUndo" class="undo-bar">
-        <span class="undo-text">🍅 +1 已记录</span>
-        <n-button
-          size="tiny"
-          quaternary
-          type="warning"
-          @click="handleUndo"
-        >
+        <span class="undo-text">已记录 1 个番茄</span>
+        <n-button size="tiny" quaternary type="warning" @click="handleUndo">
           撤销
         </n-button>
       </div>
@@ -80,23 +74,25 @@ onUnmounted(() => {
     <!-- 今日番茄数 -->
     <div class="today-count">
       <span class="today-label">今日</span>
-      <span class="today-icons">{{ '🍅'.repeat(Math.min(store.sessionsCompleted, 12)) }}</span>
       <span class="today-number">{{ store.sessionsCompleted }}</span>
+      <span class="today-unit">个番茄</span>
     </div>
 
-    <!-- 周期进度 -->
+    <!-- 周期进度 — 自定义圆点 -->
     <div class="cycle-progress">
-      <span
-        v-for="(icon, idx) in tomatoIcons"
+      <div
+        v-for="(dot, idx) in cycleDots"
         :key="idx"
         class="cycle-dot"
-      >{{ icon }}</span>
+        :class="`dot-${dot.type}`"
+        :style="dot.type !== 'pending' ? { '--dot-color': modeColor } : {}"
+      />
     </div>
 
-    <!-- 模式标签 -->
-    <n-tag :bordered="false" size="small" class="mode-tag" :style="{ background: modeColor + '18', color: modeColor }">
-      {{ store.modeLabel }} · 下一阶段：{{ store.nextModeLabel }}
-    </n-tag>
+    <!-- 下一阶段提示 -->
+    <div class="next-phase" :style="{ color: modeColor }">
+      {{ store.nextModeLabel }}
+    </div>
   </div>
 </template>
 
@@ -105,82 +101,101 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  margin-top: 8px;
+  gap: 10px;
+  margin-top: 12px;
 }
 
+/* 撤销栏 */
 .undo-bar {
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: #FEF3C7;
-  border: 1px solid #FCD34D;
-  border-radius: 8px;
-  padding: 4px 12px;
-  animation: undo-pulse 0.3s ease;
-}
-
-@keyframes undo-pulse {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  gap: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  box-shadow: var(--shadow-sm);
 }
 
 .undo-text {
-  font-size: 13px;
-  color: #92400E;
+  font-size: 12px;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .undo-fade-enter-active,
 .undo-fade-leave-active {
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .undo-fade-enter-from,
 .undo-fade-leave-to {
   opacity: 0;
-  transform: translateY(-8px);
+  transform: translateY(-6px);
 }
 
+/* 今日番茄数 */
 .today-count {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  color: var(--text-secondary);
+  align-items: baseline;
+  gap: 4px;
 }
 
 .today-label {
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-tertiary);
-}
-
-.today-icons {
-  letter-spacing: 2px;
-  font-size: 16px;
+  letter-spacing: 1px;
 }
 
 .today-number {
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 800;
   color: var(--text-primary);
-  background: var(--bg-hover);
-  border-radius: 12px;
-  padding: 0 8px;
-  min-width: 24px;
-  text-align: center;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
+.today-unit {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* 周期进度 */
 .cycle-progress {
   display: flex;
-  gap: 4px;
-  font-size: 18px;
+  gap: 8px;
+  align-items: center;
 }
 
 .cycle-dot {
-  transition: transform 0.3s;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.mode-tag {
+.dot-done {
+  background: var(--dot-color, #E04040);
+  box-shadow: 0 0 6px var(--dot-color, #E04040);
+}
+
+.dot-active {
+  background: transparent;
+  border: 2px solid var(--dot-color, #E04040);
+  box-shadow: 0 0 8px rgba(224, 64, 64, 0.3);
+  transform: scale(1.3);
+}
+
+.dot-pending {
+  background: var(--border-color);
+}
+
+/* 下一阶段提示 */
+.next-phase {
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 3px;
+  opacity: 0.8;
 }
 </style>
