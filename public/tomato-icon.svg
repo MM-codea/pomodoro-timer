@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 西红柿主体 -->
+  <circle cx="32" cy="36" r="22" fill="#EF4444"/>
+  <!-- 高光 -->
+  <ellipse cx="24" cy="28" rx="6" ry="5" fill="#FCA5A5" opacity="0.6"/>
+  <!-- 叶子 -->
+  <ellipse cx="22" cy="16" rx="5" ry="6" fill="#22C55E" transform="rotate(-20, 22, 16)"/>
+  <ellipse cx="42" cy="16" rx="5" ry="6" fill="#22C55E" transform="rotate(20, 42, 16)"/>
+  <!-- 茎 -->
+  <rect x="30" y="10" width="4" height="8" rx="2" fill="#166534"/>
+</svg>

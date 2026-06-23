@@ -1,0 +1,63 @@
+/* ========= 全局样式 & CSS 变量 ========= */
+
+:root {
+  /* 亮色主题 */
+  --bg-primary: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --bg-hover: #F1F5F9;
+  --text-primary: #1E293B;
+  --text-secondary: #64748B;
+  --text-tertiary: #94A3B8;
+  --border-color: #E2E8F0;
+
+  /* 品牌色 */
+  --color-work: #EF4444;
+  --color-work-dim: #FEF2F2;
+  --color-short-break: #22C55E;
+  --color-short-break-dim: #F0FDF4;
+  --color-long-break: #3B82F6;
+  --color-long-break-dim: #EFF6FF;
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
+/* 暗色主题（跟随系统） */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #0F172A;
+    --bg-card: #1E293B;
+    --bg-hover: #334155;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-tertiary: #64748B;
+    --border-color: #334155;
+
+    --color-work-dim: #3B1010;
+    --color-short-break-dim: #0A3020;
+    --color-long-break-dim: #0A1A3A;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  -webkit-app-region: no-drag;
+}
+
+body {
+  background: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+

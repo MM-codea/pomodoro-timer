@@ -1,0 +1,22 @@
+appId: com.pomodoro.timer
+productName: 番茄钟
+directories:
+  buildResources: build
+  output: release
+files:
+  - dist
+  - dist-electron
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: public/tomato-icon.png
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  shortcutName: 番茄钟
+  uninstallDisplayName: 番茄钟
+extraMetadata:
+  main: dist-electron/main.js
